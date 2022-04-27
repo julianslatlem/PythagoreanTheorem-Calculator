@@ -1,4 +1,3 @@
-from itertools import dropwhile
 import math
 
 def isfloat(num):
