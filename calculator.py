@@ -8,7 +8,7 @@ def isfloat(num):
         return False
 
 print("x = unknown value\n")
-pv = int(input("Precision value: "))
+pv = 2
 
 a = input("a: ")
 if isfloat(a):
@@ -22,12 +22,11 @@ c = input("c: ")
 if isfloat(c):
     c = float(c)
     
-if a is "x":
+if a == "x":
     print(round(math.sqrt((c * c) - (b * b)), pv))
-elif b is "x":
+elif b == "x":
     print(round(math.sqrt((c * c) - (a * a)), pv))
-elif c is "x":
+elif c == "x":
     print(round(math.sqrt((a * a) + (b * b)), pv))
     
-print("Press enter to quit.")
-input()
+input("Press enter to continue.")
