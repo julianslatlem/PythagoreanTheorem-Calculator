@@ -28,3 +28,6 @@ elif b is "x":
     print(round(math.sqrt((c * c) - (a * a)), pv))
 elif c is "x":
     print(round(math.sqrt((a * a) + (b * b)), pv))
+    
+print("Press enter to quit.")
+input()
