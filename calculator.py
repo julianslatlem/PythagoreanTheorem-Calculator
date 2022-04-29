@@ -1,6 +1,6 @@
-import math
-import log
+import math,log,pyperclip
 
+pv,currentX,x,side,doInput,a,b,c=2,0,0,0,True,0,0,0
 errors=["69420"]
 
 def isfloat(num):
@@ -10,73 +10,56 @@ def isfloat(num):
     except ValueError:
         return False
 
-print("x = unknown value\n")
-pv=2
-
-currentX=0
-x=0
-side=0
-doInput=True
-while doInput:
-    
-    while side==0:
-        a=input("a: ")
-        if isfloat(a):
+def isvalid(test):
+    global x,side,currentX,a,b,c
+    if isfloat(test):
+        if side==0:
             a=float(a)
-            side+=1
-            currentX=f"a"
-        elif a=="x":
-            if x!=1:
-                side+=1
-                x+=1
-            else:
-                log.warning('"'+"x"+'"'+" variable already exists.")
-        else:
-            log.error(f'Invalid input "{a}".', errors[0])
-    
-    while side==1:
-        b=input("b: ")
-        if isfloat(b):
+            currentX="a"
+        if side==1:
             b=float(b)
-            side+=1
-            currentX=f"b"
-        elif b=="x":
-            if x!=1:
-                side+=1
-                x+=1
-            else:
-                log.warning('"'+"x"+'"'+" variable already exists.")
-        else:
-            log.error(f'Invalid input "{b}".', errors[0])
-    
-    while side==2:
-        c=input("c: ")
-        if isfloat(c):
+            currentX="b"
+        if side==2:
             c=float(c)
-            if isfloat(a) and c<=a or isfloat(b) and c<=b:
-                log.warning("Value must be bigger than "+'"'+f"{currentX}"+'"')
-            else:
-                side+=1
-        elif c=="x":
-            if x!=1:
-                side+=1
-                x+=1
-            else:
-                log.warning('"'+"x"+'"'+" variable already exists.")
+            if x==0:
+                side-=1
+                log.warning('Equation must have at least 1 "x" variable.')
+            elif x==1 and  isfloat(a) and c<=a or x == 1 and isfloat(b) and c<=b:
+                side-=1
+                log.warning("Value must be bigger than "+'"'+f"{currentX}"+'".')
+        side+=1
+    elif test=="x":
+        if x!=1:
+            side+=1
+            x+=1
         else:
-            log.error(f'Invalid input "{c}".', errors[0])
-    
-    if x==1:
-        doInput=False
+            log.warning('"'+"x"+'"'+" variable already exists.")
     else:
-        side=0
-        x=0
+        log.error(f'Invalid input "{test}".', errors[0])
+        
+print("x = unknown value\n")
+
+while side==0:
+    a=input("a: ")
+    isvalid(a)
+
+while side==1:
+    b=input("b: ")
+    isvalid(b)
+
+while side==2:
+    c=input("c: ")
+    isvalid(c)
     
 if a=="x":
-    print(round(math.sqrt((c*c)-(b*b)),pv))
+    answer = round(math.sqrt((c*c)-(b*b)),pv)
+    print(f"\n√({c}² - {b}²) = \33[3m{answer}\33[0m")
 elif b=="x":
-    print(round(math.sqrt((c*c)-(a*a)),pv))
+    answer = round(math.sqrt((c*c)-(a*a)),pv)
+    print(f"\n√({c}² - {a}²) = \33[3m{answer}\33[0m")
 elif c=="x":
-    print(round(math.sqrt((a*a)+(b*b)),pv))
+    answer = round(math.sqrt((a*a)+(b*b)),pv)
+    print(f"\n√({a}² + {b}²) = \33[3m{answer}\33[0m")
+pyperclip.copy(answer)
 
 log.misc("Press enter to exit.")
